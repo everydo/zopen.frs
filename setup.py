@@ -4,8 +4,8 @@ import xml.sax.saxutils
 from setuptools import setup, find_packages
 
 setup (
-    name='zopen.frs.core',
-    version='0.1.1dev',
+    name='zopen.frs',
+    version='1.0',
     author = "panjy",
     author_email = "panjunyong@gmail.com",
     description = "zopen frs management",
@@ -20,13 +20,12 @@ setup (
         'Operating System :: OS Independent',
         'Topic :: Internet :: WWW/HTTP',
         'Framework :: Zope3'],
-    url = 'http://pypi.zopen.cn/zopen.frs.core',
+    url = 'http://pypi.zopen.cn/zopen.frs',
     packages = find_packages(),
     include_package_data = True,
-    namespace_packages= ['zopen', 'zopen.frs'],
+    namespace_packages= ['zopen', ],
     install_requires = [
          'setuptools',
-         'Gnosis_Utils',
          # tests only
         'zope.datetime',
         ],
