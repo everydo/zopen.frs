@@ -9,11 +9,10 @@ caching and more.
 做什么
 ===============
 1. 定义了一套虚拟的文件路径系统，可和实际的存储路径映射，避免直接和操作系统的文件系统打交道
-2. 支持文件元数据(metadata)的存储，比如标题、描述、修改时间等
-3. 支持版本管理，可存储文件的历史版本。存放到(.frs目录中)
-4. 支持缓存／数据转换，比如图片的各种大小的 格式转换和存储，word文件的html预览转换和存储
-5. 支持垃圾箱，删除的文件可自动存放在垃圾箱里面
-6. 三级目录映射
+#. 支持版本管理，可存储文件的历史版本。存放到(.frs目录中)
+#. 支持缓存／数据转换，比如图片的各种大小的 格式转换和存储，word文件的html预览转换和存储
+#. 支持垃圾箱，删除的文件可自动存放在垃圾箱里面
+#. 三级目录映射
 
    - 网站 (zpath) -> FRS  (vpath)
    - FRS (vpath) -> ospath (path)
@@ -52,20 +51,12 @@ caching and more.
     >>> d21 = d2 + '/d21'
     >>> os.mkdir(d21)
 
-自行创建一个FRS, 注册到注册表:
-
-    >>> from zopen.frs import FRS
-    >>> from zopen.frs.interfaces import IFRS
-    >>> from zope.component import getGlobalSiteManager
-    >>> gsm = getGlobalSiteManager()
-    >>> gsm.registerUtility(FRS(), IFRS)
 
 初始化
 ===================
-从注册表中得到一个:
+得到一个:
 
-    >>> from zope.component import getUtility
-    >>> frs_root = getUtility(IFRS)
+    >>> frs_root = FRS()
 
 什么都没有：
 

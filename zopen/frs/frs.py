@@ -11,8 +11,6 @@ from StringIO import StringIO
 
 from utils import ucopy2, ucopytree, umove
 
-from manifest import ManifestMixin
-from metadata import MetadataMixin
 from archive import ArchiveSupportMixin
 from recycle import RecycleMixin
 from cache import CacheMixin
@@ -39,7 +37,7 @@ def loadFRSFromConfig(config):
         frs.mapSitepath2Vpath( unicode(site_path), unicode(vpath) )
     return frs
 
-class FRS(MetadataMixin, ManifestMixin, ArchiveSupportMixin, RecycleMixin, CacheMixin):
+class FRS(ArchiveSupportMixin, RecycleMixin, CacheMixin):
 
     def __init__(self, cache_root='/tmp', dotfrs='.frs', version="json"):
         self._top_paths = {}
@@ -293,17 +291,10 @@ class FRS(MetadataMixin, ManifestMixin, ArchiveSupportMixin, RecycleMixin, Cache
             self.makedirs( self.dirname(dst) )
         self.move(src, dst)
 
-        #if self.version == 'json':
-        #  me = self.getMetadata(dst)
-        #  # how to uid?
-        #  #移动后文件的intid也改变了,这里把id置为0,将在其他地方以intid替换
-        #  me.metadata['zope']['id'] = 0
-        #  self.saveMetadata(dst, me.metadata )
-
         CacheMixin.moveCache(self, src, dst)
 
-    def copyAsset(self, src, dst, copy_archiveinfo=False, **kw):
-        """ copy folder / file and associated manifest/subfiles, not include archives
+    def copyAsset(self, src, dst, **kw):
+        """ copy folder / file and associated subfiles, not include archives
 
         don't keep stat
         """
@@ -315,40 +306,6 @@ class FRS(MetadataMixin, ManifestMixin, ArchiveSupportMixin, RecycleMixin, Cache
                 self.makedirs(dst)
             for name in self.listdir(src):
                 self.copyAsset(self.joinpath(src, name), self.joinpath(dst, name), copycache=0)
-
-        # TODO : should be more generic, copy all file/folder except archived
-
-        # copy manifest
-        # generate new uid when copy
-        if self.version == '':
-            self.genManifestUID(dst, self.getManifest(src) )
-
-            # copy subfiles too
-            srcSubfolder = self.subfilespath(src)
-            if self.exists(srcSubfolder):
-                dstSubfolder = self.subfilespath(dst)
-                m_dir_path = self.dirname(dstSubfolder)
-                if not self.exists(m_dir_path):
-                    self.makedirs(m_dir_path)
-                self.copytree(srcSubfolder, dstSubfolder)
-        elif self.version == 'json':
-            srcMetadatapath = self.metadatapath(src)
-            dstMetadatapath = self.metadatapath(dst)
-            if self.exists(srcMetadatapath):
-                m_dir_path = self.dirname(dstMetadatapath)
-                if not self.exists(m_dir_path):
-                    self.makedirs(m_dir_path)
-                self.copyfile(srcMetadatapath,dstMetadatapath)
-
-        # copy archiveinfo file
-        if copy_archiveinfo:
-            srcArchivePath = self.archiveinfopath(src)
-            if self.exists(srcArchivePath):
-                dstArchivePath = self.archiveinfopath(dst)
-                m_dir_path = self.dirname(dstArchivePath)
-                if not self.exists(m_dir_path):
-                    self.makedirs(m_dir_path)
-                self.copyfile(srcArchivePath, dstArchivePath)
 
         # copy cache
         CacheMixin.copyCache(self, src,dst)
