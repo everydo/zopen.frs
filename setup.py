@@ -3,12 +3,16 @@ import os
 import xml.sax.saxutils
 from setuptools import setup, find_packages
 
+here = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(here, 'README.md')).read()
+
 setup (
     name='zopen.frs',
-    version='1.1',
+    version='1.2',
     author = "panjy",
     author_email = "panjunyong@gmail.com",
     description = "zopen frs management",
+    long_description=README,
     license = "Private",
     keywords = "zope3 z3c rpc server client operation",
     classifiers = [

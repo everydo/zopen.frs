@@ -75,9 +75,9 @@ class FRS(ArchiveSupportMixin, RecycleMixin, CacheMixin):
             site_path, version = site_path.split('/++versions++/')
             site_path = site_path.split('/')
             site_path.insert(-1, self.dotfrs)
-            _, ext = os.path.splitext(site_path[-1])
+            #_, ext = os.path.splitext(site_path[-1])
             site_path.append(FRS_ARCHIVED_FOLDER_NAME)
-            site_path.append(version + ext)
+            site_path.append(version)
             site_path = '/'.join(site_path)
 
         for _spath, _vpath in self.sitepaths2vpaths:
