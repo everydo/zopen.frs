@@ -8,7 +8,7 @@ README = open(os.path.join(here, 'README.md')).read()
 
 setup (
     name='zopen.frs',
-    version='1.2',
+    version='1.2.1',
     author = "panjy",
     author_email = "panjunyong@gmail.com",
     description = "zopen frs management",
