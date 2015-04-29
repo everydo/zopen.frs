@@ -298,6 +298,9 @@ class FRS(ArchiveSupportMixin, RecycleMixin, CacheMixin):
 
         don't keep stat
         """
+        if not self.exists(src):
+            raise ValueError("source path is not exists: %s" % src)
+            
         if self.isfile(src):
             self.copyfile(src, dst)
         else:
