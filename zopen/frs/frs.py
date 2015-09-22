@@ -8,7 +8,7 @@ from types import UnicodeType
 from ConfigParser import SafeConfigParser
 from StringIO import StringIO
 
-
+import fnmatch
 from utils import ucopy2, ucopytree, umove
 
 from archive import ArchiveSupportMixin
