@@ -1,12 +1,8 @@
 # -*- encoding: utf-8 -*-
 """ asset archive management
 """
-import time
-from xml.sax import parseString, ContentHandler
-from xml.sax.saxutils import escape
 
-from utils import timetag
-from config import FRS_ARCHIVED_FOLDER_NAME
+from .config import FRS_ARCHIVED_FOLDER_NAME
 
 
 class ArchiveSupportMixin:

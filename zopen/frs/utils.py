@@ -1,14 +1,15 @@
 # -*- encoding:utf-8 -*-
+
+import os
 import time
 import datetime
-import os
 import shutil
 import socket
+import array
+import binascii
 from random import random
 from hashlib import md5
-from config import FS_CHARSET
-from types import UnicodeType
-import array, binascii
+
 
 def int2ascii(value):
     return binascii.b2a_hex(buffer(array.array('l', (value,))))  # 4byte
@@ -27,33 +28,16 @@ def timetag(timestamp=None):
         the_time = time.gmtime()
         return time.strftime('%Y-%m-%d-%H-%M-%S', the_time)
     else:
-        the_time = datetime.datetime.fromtimestamp(timstamp)
+        the_time = datetime.datetime.fromtimestamp(timestamp)
         return the_time.strftime('%Y-%m-%d-%H-%M-%S')
 
 def ucopy2(ossrc, osdst):
-    # ucopy2 dosn't work with unicode filename yet
-    if type(osdst) is UnicodeType and \
-           not os.path.supports_unicode_filenames:
-        ossrc = ossrc.encode(FS_CHARSET)
-        osdst = osdst.encode(FS_CHARSET)
     shutil.copy2(ossrc, osdst)
 
 def ucopytree(ossrc, osdst, symlinks=False):
-    # ucopy2 dosn't work with unicode filename yet
-    if type(osdst) is UnicodeType and \
-            not os.path.supports_unicode_filenames:
-        ossrc = ossrc.encode(FS_CHARSET)
-        osdst = osdst.encode(FS_CHARSET)
     shutil.copytree(ossrc, osdst, symlinks)
 
 def umove(ossrc, osdst):
-    # umove dosn't work with unicode filename yet
-    if type(osdst) is UnicodeType and \
-           not os.path.supports_unicode_filenames:
-        ossrc = ossrc.encode(FS_CHARSET)
-        osdst = osdst.encode(FS_CHARSET)
-    # windows move 同一个文件夹会有bug，这里改为rename
-    # 例子： c:\test move to c:\Test
     if ossrc.lower() == osdst.lower():
         os.rename(ossrc, osdst)
     else:
@@ -62,11 +46,11 @@ def umove(ossrc, osdst):
 try:
     _v_network = str(socket.gethostbyname(socket.gethostname()))
 except:
-    _v_network = str(random() * 100000000000000000L)
+    _v_network = str(random() * 100000000000000000)
 
 def make_uuid(*args):
-    t = str(time.time() * 1000L)
-    r = str(random()*100000000000000000L)
+    t = str(time.time() * 1000)
+    r = str(random()*100000000000000000)
     data = t +' '+ r +' '+ _v_network +' '+ str(args)
     uid = md5(data).hexdigest()
     return uid

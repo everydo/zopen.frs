@@ -1,1 +1,1 @@
-from frs import FRS, loadFRSFromConfig
+from .frs import FRS, loadFRSFromConfig

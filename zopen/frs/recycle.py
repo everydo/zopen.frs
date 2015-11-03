@@ -1,18 +1,18 @@
 #coding:utf8
-from config import FRS_REMOVED_FOLDER_NAME
-from utils import timetag, int2ascii, ascii2int
+from .config import FRS_REMOVED_FOLDER_NAME
+from .utils import timetag, int2ascii, ascii2int
 import datetime
 import time
 
 class RecycleMixin:
-    """ trushcase enables mixin for file repository system 
+    """ trushcase enables mixin for file repository system
     """
 
     def removedpath(self, path, timestamp):
         if type(timestamp) in [str, unicode]:
             timestamp = ascii2int(timestamp)
         root, subpath= path[1:].split('/', 1)
-        removeName = "%s.%s" % ( int2ascii(int(timestamp)), int2ascii(hash(subpath)))
+        removeName = "%s.%s" % (int2ascii(int(timestamp)), int2ascii(hash(subpath)))
         return self.joinpath('/',root, FRS_REMOVED_FOLDER_NAME, removeName)
 
     def recycleAssets(self, path, srcNames,timestamp=None):
@@ -32,7 +32,7 @@ class RecycleMixin:
         root, subpath= path[1:].split('/', 1)
         recyle = self.joinpath(root, FRS_REMOVED_FOLDER_NAME)
         pathhash = int2ascii(hash(subpath))
-        
+
         for filename in self.listdir(recyle):
             timestamp , _pathhash = filename.split('.', 1)
             if _pathhash == pathhash:
@@ -46,7 +46,7 @@ class RecycleMixin:
     def revertRemove(self, path, removeName, assetName, reset_parent=None, new_name=''):
         """ 恢复一个删除的文件 """
         removedPath = self.removedpath(path, removeName)
-        src_name = assetName 
+        src_name = assetName
         srcPath = self.joinpath(removedPath, src_name)
         dst_name = src_name if not new_name else new_name
         if reset_parent:
@@ -69,7 +69,7 @@ class RecycleMixin:
              return
         if not assetNames:
             self.rmtree(removedPath)
-	    return 
+	    return
 
         for name in assetNames:
             srcPath = self.joinpath(removedPath, name)
@@ -78,7 +78,7 @@ class RecycleMixin:
             self.rmtree(removedPath)
 
     def walkTrashBox(self, top_path='/', days=0, cmp_result=0):
-        """ -1: older than history day; 0: all; 1: greater than history day 
+        """ -1: older than history day; 0: all; 1: greater than history day
 
         """
         # XXX need to rewrite
