@@ -69,7 +69,7 @@ class RecycleMixin:
              return
         if not assetNames:
             self.rmtree(removedPath)
-	    return
+            return
 
         for name in assetNames:
             srcPath = self.joinpath(removedPath, name)
