@@ -2,7 +2,7 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.md')).read()
+README = open(os.path.join(here, 'README.md'), encoding='utf-8').read()
 
 setup (
     name='zopen.frs',
