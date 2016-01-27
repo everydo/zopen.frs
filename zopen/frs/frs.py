@@ -6,7 +6,6 @@ import os, shutil
 import posixpath
 from ConfigParser import SafeConfigParser
 from StringIO import StringIO
-import fnmatch
 from utils import ucopytree, umove
 
 from archive import ArchiveSupportMixin
