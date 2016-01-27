@@ -1,16 +1,12 @@
 # encoding: utf-8
 import os
-import shutil
-
-from config import FRS_CACHE_FOLDER_PREFIX, FRS_ARCHIVED_FOLDER_NAME
-from utils import ucopytree
+from config import FRS_CACHE_FOLDER_PREFIX
 
 class CacheMixin:
 
     def getCacheFolder(self, vpath, cachename=None):
         """ get os path of cache folder for vpath """
-        cachebase = os.path.join(self.cache_root, 
-                            *vpath.split('/') )
+        cachebase = os.path.join(self.cache_root, *vpath.split('/') )
 
         if cachename:
             foldername = FRS_CACHE_FOLDER_PREFIX + cachename

@@ -28,6 +28,7 @@ class RecycleMixin:
 
     def listRemoves(self, path):
         """ retime remved timestamps """
+        root, subpath= path[1:].split('/', 1)
         recyle = self.joinpath(root, FRS_REMOVED_FOLDER_NAME)
 
         removes = []

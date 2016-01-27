@@ -4,12 +4,10 @@
 
 import os, shutil
 import posixpath
-from types import UnicodeType
 from ConfigParser import SafeConfigParser
 from StringIO import StringIO
-
-
-from utils import ucopy2, ucopytree, umove
+import fnmatch
+from utils import ucopytree, umove
 
 from archive import ArchiveSupportMixin
 from recycle import RecycleMixin
